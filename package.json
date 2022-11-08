@@ -11,11 +11,18 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/tailwind": "^2.1.2",
     "astro": "^1.6.0",
-    "highlight.js": "^11.6.0"
+    "highlight.js": "^11.6.0",
+    "tailwindcss": "^3.2.2"
   },
   "devDependencies": {
     "@astrojs/svelte": "^1.0.2",
-    "svelte": "^3.52.0"
+    "@popperjs/core": "^2.11.6",
+    "classnames": "^2.3.2",
+    "flowbite": "^1.5.3",
+    "flowbite-svelte": "^0.27.14",
+    "svelte": "^3.52.0",
+    "svelte-awesome-color-picker": "^2.1.3"
   }
 }

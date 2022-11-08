@@ -1,44 +1,140 @@
 <script lang="ts">
-  import {onMount} from 'svelte';
-  import hljs from 'highlight.js';
-  import 'highlight.js/styles/atom-one-dark.css';
-
-  // hljs.highlightAll();
+  import { onMount } from "svelte";
+  import hljs from "highlight.js";
+  import "highlight.js/styles/github.css";
+  import "highlight.js/styles/atom-one-dark.css";
+  import ColorPicker from "svelte-awesome-color-picker";
+  import { Button, Dropdown, Chevron, Radio } from "flowbite-svelte";
 
   function renderCode() {
     let snippet = document.getElementById("code");
     if (snippet != null) {
-      snippet.innerHTML = code
+      snippet.innerHTML = code;
       hljs.highlightElement(snippet);
     }
-    console.log(code)
-    console.log(snippet)
+  }
+
+  function setHeight() {
+    let lines = code.match(/\n/g).length;
+    height = (lines + 1) * (fontSize+4);
   }
 
   let borderRadius = 10;
-  let terminalBackground = '#25323a'
-  let background = '#bfe4f7'
+  let terminalBackground = "#25323a";
+  let background = "#bfe4f7";
+
+  let height: number = 140;
+
+  let showLanguage = true;
   let fontSize = 16;
-  let padding = 15;
-  let code = "from dataclass import dataclass\nimport numpy as np"
+  let padding = 40;
+  let code = "from dataclass import dataclass\nimport numpy as np";
   $: code && renderCode();
-  $: code == "" && renderCode()
-  let language = "python"
-  let font = "Fira Code"
+  $: code == "" && renderCode();
+  let language = "python";
+  let font = "Fira Code";
+  let theme = "atom-one-dark";
+
+  setHeight();
   onMount(() => {
-    renderCode()
-  })
+    renderCode();
+  });
 </script>
 
 <div>
   <div class="page-content">
     <div class="viewer" style="background: {background};">
-      <div class="code-snippet-container" style="border-radius: {borderRadius}px;">
-        <pre><code id="code" class="language-{language}" style="font-family: {font} !important; margin: {padding}px">{code}</code></pre>
-        <textarea bind:value={code} id="codeSnippet" name="code-snippet" style="background: {terminalBackground}; border-radius: {borderRadius}px; font-size: {fontSize}px; font-family: {font} !important; padding: {padding}px;"/>
+      <div
+        class="code-snippet-container"
+        style="border-radius: {borderRadius}px; font-size: {fontSize}px;"
+      >
+        <pre style="font-size: {fontSize}px;"><code
+            id="code"
+            class="language-{language}"
+            style="font-family: {font} !important; padding: {padding}px;"
+            >{code}</code></pre>
+        <textarea
+          bind:value={code}
+          on:input={setHeight}
+          id="codeSnippet"
+          name="code-snippet"
+          style="background: {terminalBackground}; height: {height}px; border-radius: {borderRadius}px; font-family: {font} !important; padding: {padding}px;"
+        />
+        <div
+            style="{showLanguage ? '' : 'display: none;'} right: {padding}px; bottom: {padding}px; font-family: {font};"
+            class="language">{language}</div>
       </div>
     </div>
-    <div class="controller">Controller</div>
+    <div class="controller">
+      <ColorPicker bind:hex={background} />
+      <ColorPicker bind:hex={terminalBackground} />
+
+      <div class="select-font">
+
+        <Button><Chevron>Font: {font}</Chevron></Button>
+        <Dropdown>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Fira Code"}
+              >Fira Code</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Roboto Mono"}
+              >Roboto Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Space Mono"}
+              >Space Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Ubuntu Mono"}
+              >Ubuntu Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"JetBrains Mono"}
+              >JetBrains Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Noto Sans Mono"}
+              >Noto Sans Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"monospace"}
+              >monospace</Radio
+            >
+          </li>
+        </Dropdown>
+      </div>
+
+      <div class="select-theme">
+        <Button><Chevron>Theme: {theme}</Chevron></Button>
+        <Dropdown>
+          <li>
+            <Radio name="group2" bind:group={theme} value={"atom-one-dark"}
+              >Atom One Dark</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} value={"github"}
+              >GitHub Light</Radio
+            >
+          </li>
+        </Dropdown>
+      </div>
+
+      <div class="show-language">
+        <label>
+          Show language:
+          <input type=checkbox bind:checked={showLanguage}>
+        </label>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -56,7 +152,7 @@
     place-items: center;
   }
   .controller {
-    width: 350px;
+    width: 400px;
   }
   #codeSnippet {
     color: transparent;
@@ -64,8 +160,9 @@
     border: none;
     resize: none;
     caret-color: white;
-    width: 710px;
-    height: 500px;
+    width: -webkit-fill-available;
+    outline: none;
+    font-size: inherit;
   }
 
   :global(pre) {
@@ -75,16 +172,52 @@
   pre {
     pointer-events: none;
     margin: 0;
+    width: fit-content;
+    font-size: inherit;
   }
   pre code {
     padding: 0;
-    width: 700px;
+    font-size: inherit;
+  }
+
+  .code-snippet-container {
+    position: relative;
+  }
+
+  pre,
+  .code-snippet-container {
+    width: 55em;
   }
 
   #code {
     background: transparent !important;
-    width: 700px;
     white-space: pre-wrap;
   }
 
+  .language {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  :global(button) {
+    display: inline-flex;
+    text-align: center;
+    text-justify: center;
+    border-radius: 6px;
+    place-items: center;
+  }
+
+  :global(ul) {
+    list-style-type: none;
+    padding-left: 0.3em;
+    margin: 0;
+  }
+
+  :global(input[type="color" i]) {
+    flex-shrink: none;
+    outline: none;
+    border-radius: 0;
+  }
 </style>
