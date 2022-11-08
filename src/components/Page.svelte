@@ -15,15 +15,18 @@
   }
 
   function setHeight() {
-    let lines = code.match(/\n/g).length;
-    height = (lines + 1) * (fontSize+4);
+    let area = document.getElementById('codeSnippet');
+    if (area != null) {
+      let lines = code.match(/\n/g).length + 1;
+      area.rows = lines;
+    }
   }
 
   let borderRadius = 10;
   let terminalBackground = "#25323a";
   let background = "#bfe4f7";
 
-  let height: number = 140;
+  let height: number = 100;
 
   let showLanguage = true;
   let fontSize = 16;
@@ -50,15 +53,15 @@
       >
         <pre style="font-size: {fontSize}px;"><code
             id="code"
-            class="language-{language}"
+            class="language-{language} noselect"
             style="font-family: {font} !important; padding: {padding}px;"
             >{code}</code></pre>
         <textarea
           bind:value={code}
           on:input={setHeight}
           id="codeSnippet"
-          name="code-snippet"
-          style="background: {terminalBackground}; height: {height}px; border-radius: {borderRadius}px; font-family: {font} !important; padding: {padding}px;"
+          name="code-snippet noselect"
+          style="background: {terminalBackground};  border-radius: {borderRadius}px; font-family: {font} !important; padding: {padding}px;"
         />
         <div
             style="{showLanguage ? '' : 'display: none;'} right: {padding}px; bottom: {padding}px; font-family: {font};"
@@ -76,6 +79,11 @@
           <li>
             <Radio name="group1" bind:group={font} value={"Fira Code"}
               >Fira Code</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"SF Mono"}
+              >SF Mono</Radio
             >
           </li>
           <li>
@@ -104,8 +112,48 @@
             >
           </li>
           <li>
-            <Radio name="group1" bind:group={font} value={"monospace"}
-              >monospace</Radio
+            <Radio name="group1" bind:group={font} value={"IBM Plex Mono"}
+              >IBM Plex Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Share Tech Mono"}
+              >Share Tech Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Cascadia Code"}
+              >Cascadia Code</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Red Hat Mono"}
+              >Red Hat Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Deja Vu Sans Mono"}
+              >Deja Vu Sans Mono</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Hack"}
+              >Hack</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Proggy"}
+              >Proggy</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Terminus"}
+              >Terminus</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Dina"}
+              >Dina</Radio
             >
           </li>
         </Dropdown>
@@ -134,11 +182,65 @@
         </label>
       </div>
 
+      <div class="select-font-size">
+        <button on:click="{() => {fontSize++}}">Larger</button>
+        <div>{fontSize}</div>
+        <button on:click="{() => {fontSize--}}">Smaller</button>
+      </div>
     </div>
   </div>
 </div>
 
 <style scoped>
+  @font-face {
+      font-family: 'Cascadia Code';
+      src: url('fonts/CascadiaCode.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'Deja Vu Sans Mono';
+      src: url('fonts/DejaVuSansMono.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'Hack';
+      src: url('fonts/Hack-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+        font-family: 'Monoid';
+        src: url('fonts/Monoid-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Proggy';
+        src: url('fonts/ProggyClean.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Terminus';
+        src: url('fonts/TerminusTTF-4.49.2.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Dina';
+        src: url('fonts/DinaRemasterCollection.ttc');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'SF Mono';
+        src: url('fonts/SFMonoRegular.otf');
+        font-weight: normal;
+        font-style: normal;
+    }
+
   :global(body) {
     margin: 0;
   }
@@ -168,6 +270,16 @@
   :global(pre) {
     position: absolute !important;
   }
+
+  .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 
   pre {
     pointer-events: none;
