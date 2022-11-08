@@ -6,6 +6,12 @@
   import ColorPicker from "svelte-awesome-color-picker";
   import { Button, Dropdown, Chevron, Radio } from "flowbite-svelte";
 
+  function titleCase(str: string): string {
+    return str.toLowerCase().split(' ').map(function(word) {
+      return word.replace(word[0], word[0].toUpperCase());
+    }).join(' ');
+  }
+
   function renderCode() {
     let snippet = document.getElementById("code");
     if (snippet != null) {
@@ -25,8 +31,6 @@
   let borderRadius = 10;
   let terminalBackground = "#25323a";
   let background = "#bfe4f7";
-
-  let height: number = 100;
 
   let showLanguage = true;
   let fontSize = 16;
@@ -160,7 +164,7 @@
       </div>
 
       <div class="select-theme">
-        <Button><Chevron>Theme: {theme}</Chevron></Button>
+        <Button><Chevron>Theme: {titleCase(theme.replace(/-/g, ' '))}</Chevron></Button>
         <Dropdown>
           <li>
             <Radio name="group2" bind:group={theme} value={"atom-one-dark"}
@@ -183,16 +187,20 @@
       </div>
 
       <div class="select-font-size">
-        <button on:click="{() => {fontSize++}}">Larger</button>
-        <div>{fontSize}</div>
-        <button on:click="{() => {fontSize--}}">Smaller</button>
+        <button class="increase-font-size-btn" on:click="{() => {fontSize = Math.max(fontSize - 1, 9)}}">-</button>
+        <div class="font-size-display">{fontSize}</div>
+        <button class="decrease-font-size-btn" on:click="{() => {fontSize = Math.min(fontSize + 1, 25)}}">+</button>
       </div>
-      
+
       <div class="select-border-radius">
-        <button on:click="{() => {borderRadius++}}">Larger</button>
-        <div>{borderRadius}</div>
-        <button on:click="{() => {borderRadius--}}">Smaller</button>
+        <div>Margin: {padding-6}</div>
+        <input type="range" name="" id="" min="6" max="100" bind:value={padding}>
       </div>
+      <div class="select-border-radius">
+        <div>Border radius: {borderRadius}</div>
+        <input type="range" name="" id="" min="0" max="80" bind:value={borderRadius}>
+      </div>
+
     </div>
   </div>
 </div>
@@ -273,6 +281,13 @@
     font-size: inherit;
   }
 
+  #codeSnippet:hover ~ .language {
+      opacity: 1;
+  }
+  .language:hover {
+      opacity: 1;
+  }
+
   :global(pre) {
     position: absolute !important;
   }
@@ -316,7 +331,13 @@
     position: absolute;
     bottom: 0;
     right: 0;
+    font-size: 0.8em;
     color: rgba(255, 255, 255, 0.4);
+    opacity: 0;
+    user-select: none;
+    transition-timing-function: ease;
+    transition-duration: 0.08s;
+    cursor: text;
   }
 
   :global(button) {
@@ -337,5 +358,13 @@
     flex-shrink: none;
     outline: none;
     border-radius: 0;
+  }
+
+  .select-font-size {
+    display: flex;
+  }
+  .font-size-display {
+    text-align: center;
+    margin: 0 5px;
   }
 </style>
