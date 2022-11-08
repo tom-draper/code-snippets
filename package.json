@@ -11,7 +11,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^1.6.0"
+    "astro": "^1.6.0",
+    "highlight.js": "^11.6.0"
   },
   "devDependencies": {
     "@astrojs/svelte": "^1.0.2",
