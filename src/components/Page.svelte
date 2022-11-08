@@ -187,6 +187,12 @@
         <div>{fontSize}</div>
         <button on:click="{() => {fontSize--}}">Smaller</button>
       </div>
+      
+      <div class="select-border-radius">
+        <button on:click="{() => {borderRadius++}}">Larger</button>
+        <div>{borderRadius}</div>
+        <button on:click="{() => {borderRadius--}}">Smaller</button>
+      </div>
     </div>
   </div>
 </div>
