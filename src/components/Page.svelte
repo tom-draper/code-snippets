@@ -274,6 +274,8 @@
     flex-grow: 1;
     display: grid;
     place-items: center;
+    height: fit-content;
+    min-height: 100vh;
   }
   .controller {
     width: 400px;
@@ -323,6 +325,7 @@
 
   .code-snippet-container {
     position: relative;
+    margin: 50px 0;
   }
 
   pre,
