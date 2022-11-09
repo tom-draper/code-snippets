@@ -33,9 +33,10 @@
   let background = "#bfe4f7";
 
   let showLanguage = true;
+  let showMacOS = false;
   let fontSize = 16;
   let padding = 40;
-  let code = "from dataclass import dataclass\nimport numpy as np";
+  let code = "from datetime import datetime\nimport numpy as np";
   $: code && renderCode();
   $: code == "" && renderCode();
   let language = "python";
@@ -55,20 +56,27 @@
         class="code-snippet-container"
         style="border-radius: {borderRadius}px; font-size: {fontSize}px;"
       >
+      <div
+          style="{showMacOS ? '' : 'display: none;'}; border-radius: {borderRadius}px {borderRadius}px 0 0; background: {terminalBackground}; padding-bottom: {padding*0.9}px;"
+          class="mac-os">
+          <div class="dot red-dot"></div>
+          <div class="dot yellow-dot"></div>
+          <div class="dot green-dot"></div>
+        </div>
         <pre style="font-size: {fontSize}px;"><code
             id="code"
             class="language-{language} noselect"
-            style="font-family: {font} !important; padding: {padding}px;"
+            style="font-family: {font} !important; padding: {padding*0.9}px {padding}px; {showMacOS ? `margin-top: -${padding}px` : ''}"
             >{code}</code></pre>
         <textarea
           bind:value={code}
           on:input={setHeight}
           id="codeSnippet"
           name="code-snippet noselect"
-          style="background: {terminalBackground};  border-radius: {borderRadius}px; font-family: {font} !important; padding: {padding}px;"
+          style="background: {terminalBackground}; {showMacOS ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;` : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding*0.9}px {padding}px; {showMacOS ? 'padding-top: 0' : ''}"
         />
         <div
-            style="{showLanguage ? '' : 'display: none;'} right: {padding}px; bottom: {padding}px; font-family: {font};"
+            style="{showLanguage ? '' : 'display: none;'} right: {padding}px; bottom: {padding*0.9}px; font-family: {font};"
             class="language">{language}</div>
       </div>
     </div>
@@ -193,12 +201,12 @@
       </div>
 
       <div class="select-border-radius">
-        <div>Margin: {padding-6}</div>
-        <input type="range" name="" id="" min="6" max="100" bind:value={padding}>
+        <div>Margin: {padding-10}</div>
+        <input type="range" name="" id="" min="10" max="100" bind:value={padding}>
       </div>
       <div class="select-border-radius">
         <div>Border radius: {borderRadius}</div>
-        <input type="range" name="" id="" min="0" max="80" bind:value={borderRadius}>
+        <input type="range" name="" id="" min="0" max="50" bind:value={borderRadius}>
       </div>
 
     </div>
@@ -366,5 +374,26 @@
   .font-size-display {
     text-align: center;
     margin: 0 5px;
+  }
+
+  .mac-os {
+    display: flex;
+    padding-top: 18px;
+    padding-left: 25px;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin: 0 6px;
+  }
+  .red-dot {
+    background: #e67059;
+  }
+  .yellow-dot {
+    background: #fbb665;
+  }
+  .green-dot {
+    background: #5ec851;
   }
 </style>
