@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import hljs from "highlight.js";
   import "highlight.js/styles/github.css";
-  import "highlight.js/styles/atom-one-dark.css";
   import ColorPicker from "svelte-awesome-color-picker";
   import { Button, Dropdown, Chevron, Radio } from "flowbite-svelte";
 
@@ -26,6 +25,10 @@
       let lines = code.match(/\n/g).length + 1;
       area.rows = lines;
     }
+  }
+
+  function setTheme(theme: string) {
+    document.documentElement.setAttribute('data-theme', theme);
   }
 
   let borderRadius = 10;
@@ -57,7 +60,7 @@
         style="border-radius: {borderRadius}px; font-size: {fontSize}px;"
       >
       <div
-          style="{showMacOS ? '' : 'display: none;'}; border-radius: {borderRadius}px {borderRadius}px 0 0; background: {terminalBackground}; padding-bottom: {padding*0.9}px;"
+          style="{showMacOS ? '' : 'display: none;'}; border-radius: {borderRadius}px {borderRadius}px 0 0; background: {terminalBackground}; padding-bottom: {padding}px;"
           class="mac-os">
           <div class="dot red-dot"></div>
           <div class="dot yellow-dot"></div>
@@ -66,17 +69,17 @@
         <pre style="font-size: {fontSize}px;"><code
             id="code"
             class="language-{language} noselect"
-            style="font-family: {font} !important; padding: {padding*0.9}px {padding}px; {showMacOS ? `margin-top: -${padding}px` : ''}"
+            style="font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS ? `margin-top: -${padding}px` : ''}"
             >{code}</code></pre>
         <textarea
           bind:value={code}
           on:input={setHeight}
           id="codeSnippet"
           name="code-snippet noselect"
-          style="background: {terminalBackground}; {showMacOS ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;` : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding*0.9}px {padding}px; {showMacOS ? 'padding-top: 0' : ''}"
+          style="background: {terminalBackground}; {showMacOS ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;` : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS ? 'padding-top: 0' : ''}"
         />
         <div
-            style="{showLanguage ? '' : 'display: none;'} right: {padding}px; bottom: {padding*0.9}px; font-family: {font};"
+            style="{showLanguage ? '' : 'display: none;'} right: {padding}px; bottom: {padding}px; font-family: {font};"
             class="language">{language}</div>
       </div>
     </div>
@@ -175,12 +178,12 @@
         <Button><Chevron>Theme: {titleCase(theme.replace(/-/g, ' '))}</Chevron></Button>
         <Dropdown>
           <li>
-            <Radio name="group2" bind:group={theme} value={"atom-one-dark"}
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('atom-one-dark')}}" value={"atom-one-dark"}
               >Atom One Dark</Radio
             >
           </li>
           <li>
-            <Radio name="group2" bind:group={theme} value={"github"}
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('github')}}" value={"github"}
               >GitHub Light</Radio
             >
           </li>
@@ -191,6 +194,13 @@
         <label>
           Show language:
           <input type=checkbox bind:checked={showLanguage}>
+        </label>
+      </div>
+
+      <div class="show-language">
+        <label>
+          MacOS:
+          <input type=checkbox bind:checked={showMacOS}>
         </label>
       </div>
 
@@ -289,6 +299,7 @@
     width: -webkit-fill-available;
     outline: none;
     font-size: inherit;
+    overflow: hidden;
   }
 
   #codeSnippet:hover ~ .language {
@@ -381,12 +392,12 @@
 
   .mac-os {
     display: flex;
-    padding-top: 18px;
-    padding-left: 25px;
+    padding-top: 20px;
+    padding-left: 20px;
   }
   .dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 10px;
     margin: 0 6px;
   }
@@ -399,4 +410,6 @@
   .green-dot {
     background: #5ec851;
   }
+
+
 </style>
