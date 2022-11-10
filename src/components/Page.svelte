@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import hljs from "highlight.js";
-  import "highlight.js/styles/github.css";
+  // import "highlight.js/styles/github.css";
   import ColorPicker from "svelte-awesome-color-picker";
   import { Button, Dropdown, Chevron, Radio } from "flowbite-svelte";
 
@@ -79,16 +79,15 @@
           style="background: {terminalBackground}; {showMacOS ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;` : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS ? 'padding-top: 0' : ''}"
         />
         <div
-            style="{showLanguage ? '' : 'display: none;'} right: {padding}px; bottom: {padding}px; font-family: {font};"
-            class="language">{language}</div>
+            style="right: {padding}px; bottom: {padding}px; font-family: {font};"
+            class="language {showLanguage ? '' : 'hide'}">{language}</div>
       </div>
     </div>
     <div class="controller">
-      <ColorPicker bind:hex={background} />
-      <ColorPicker bind:hex={terminalBackground} />
+      <ColorPicker label="Background color" bind:hex={background} />
+      <ColorPicker label="Editor color" bind:hex={terminalBackground} />
 
-      <div class="select-font">
-
+      <div class="selector">
         <Button><Chevron>Font: {font}</Chevron></Button>
         <Dropdown>
           <li>
@@ -174,18 +173,64 @@
         </Dropdown>
       </div>
 
-      <div class="select-theme">
+      <div class="selector">
         <Button><Chevron>Theme: {titleCase(theme.replace(/-/g, ' '))}</Chevron></Button>
         <Dropdown>
           <li>
-            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('atom-one-dark')}}" value={"atom-one-dark"}
-              >Atom One Dark</Radio
-            >
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('atom-one-dark')}}" value="atom-one-dark"
+              >Atom One Dark</Radio>
           </li>
           <li>
-            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('github')}}" value={"github"}
-              >GitHub Light</Radio
-            >
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('atom-one-light')}}" value="atom-one-light"
+              >Atom One Light</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('github')}}" value="github"
+              >GitHub Light</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('github-dark')}}"  value="github-dark"
+              >GitHub Dark</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('monokai')}}" value="monokai"
+              >Monokai</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('nord')}}" value="nord"
+              >Nord</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('xcode')}}" value="xcode"
+              >XCode</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('googlecode')}}" value="googlecode"
+              >Google Code</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('a11y-dark')}}" value="a11y-dark"
+              >A11y Dark</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('a11y-light')}}" value="a11y-light"
+              >A11y Light</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('night-owl')}}" value="night-owl"
+              >Night Owl</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('obsidian')}}" value="obsidian"
+              >Obsidian</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('tokyo-night-dark')}}" value="tokyo-night-dark"
+              >Tokyo Night Dark</Radio>
+          </li>
+          <li>
+            <Radio name="group2" bind:group={theme} on:click="{() => {setTheme('tokyo-night-light')}}" value="tokyo-night-light"
+              >Tokyo Night Light</Radio>
           </li>
         </Dropdown>
       </div>
@@ -197,7 +242,7 @@
         </label>
       </div>
 
-      <div class="show-language">
+      <div class="show-os">
         <label>
           MacOS:
           <input type=checkbox bind:checked={showMacOS}>
@@ -223,7 +268,7 @@
   </div>
 </div>
 
-<style scoped>
+<style lang="scss" scoped>
   @font-face {
       font-family: 'Cascadia Code';
       src: url('fonts/CascadiaCode.ttf') format('truetype');
@@ -288,7 +333,8 @@
     min-height: 100vh;
   }
   .controller {
-    width: 400px;
+    width: max(300px, 20%);
+    padding: 20px 20px;
   }
   #codeSnippet {
     color: transparent;
@@ -302,10 +348,10 @@
     overflow: hidden;
   }
 
-  #codeSnippet:hover ~ .language {
+  #codeSnippet:hover ~ .hide {
       opacity: 1;
   }
-  .language:hover {
+  .hide:hover {
       opacity: 1;
   }
 
@@ -355,11 +401,14 @@
     right: 0;
     font-size: 0.8em;
     color: rgba(255, 255, 255, 0.4);
-    opacity: 0;
     user-select: none;
     transition-timing-function: ease;
     transition-duration: 0.08s;
     cursor: text;
+  }
+
+  .hide {
+    opacity: 0;
   }
 
   :global(button) {
@@ -374,12 +423,6 @@
     list-style-type: none;
     padding-left: 0.3em;
     margin: 0;
-  }
-
-  :global(input[type="color" i]) {
-    flex-shrink: none;
-    outline: none;
-    border-radius: 0;
   }
 
   .select-font-size {
@@ -411,5 +454,36 @@
     background: #5ec851;
   }
 
+  :global(.selector) {
+    margin: 10px 0;
+    :global(button) {
+      width: 100%;
+      :global(svg) {
+        margin-left: auto;
+      }
+    }
+    :global(div) {
+      position: relative !important;
+      transform: none !important;
+    }
+    :global(ui) {
+      padding-left: 0;
+    }
+  }
+
+  :global(.color-picker) {
+    margin: 10px 0;
+    :global(label) {
+      :global(div) {
+        border-radius: 0;
+      }
+    }
+  }
+
+  .select-font-size,
+  .show-language,
+  .show-macos {
+    margin: 10px 0;
+  }
 
 </style>
