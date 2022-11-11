@@ -20,7 +20,7 @@
   }
 
   function setHeight() {
-    let area = document.getElementById('codeSnippet');
+    let area: HTMLTextAreaElement | null = document.getElementById('codeSnippet') as HTMLTextAreaElement;
     if (area != null) {
       let matches = code.match(/\n/g);
       if (matches != null) {
@@ -42,7 +42,7 @@
   let showMacOS = false;
   let fontSize = 16;
   let padding = 40;
-  let code = "from datetime import datetime\nimport numpy as np";
+  let code = "from functools import lru_cache\n\n@lru_cache\ndef fibonacci(n):\n    if n in {0, 1}:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)";
   $: code && renderCode();
   $: code == "" && renderCode();
   let language = "python";
