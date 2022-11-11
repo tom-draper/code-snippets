@@ -22,8 +22,11 @@
   function setHeight() {
     let area = document.getElementById('codeSnippet');
     if (area != null) {
-      let lines = code.match(/\n/g).length + 1;
-      area.rows = lines;
+      let matches = code.match(/\n/g);
+      if (matches != null) {
+        let lines = matches.length + 1;
+        area.rows = lines;
+      }
     }
   }
 
