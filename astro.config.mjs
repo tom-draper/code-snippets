@@ -6,5 +6,4 @@ export default defineConfig({
   integrations: [svelte()],
   site: 'https://tom-draper.github.io',
   base: '/code-snippets',
-  outDir: 'docs',
 });
