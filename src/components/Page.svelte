@@ -49,9 +49,9 @@
   let font = "Fira Code";
   let theme = "atom-one-dark";
 
-  setHeight();
   onMount(() => {
     renderCode();
+    setHeight();
   });
 </script>
 
