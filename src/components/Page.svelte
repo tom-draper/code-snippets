@@ -490,7 +490,7 @@
   .os-btn {
     padding: 3px 8px;
     flex: 1;
-    justify-content: center;;
+    justify-content: center;
   }
 
   .mac-os-btn {
