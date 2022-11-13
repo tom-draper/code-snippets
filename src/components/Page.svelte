@@ -63,6 +63,8 @@
   let font = "Fira Code";
   let theme = "atom-one-dark";
 
+  $: font && setHeight();
+
   onMount(() => {
     renderCode();
     setHeight();
@@ -88,16 +90,17 @@
           class="windows">
           <img src="windows.png" alt="">
         </div>
-        <pre style="font-size: {fontSize}px;"><code
+        <pre style="font-family: {font} !important; font-size: {fontSize}px;"><code
             id="code"
             class="language-{language} noselect"
-            style="font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS ? `margin-top: -${padding}px` : ''}"
+            style="font-family: {font} !important; font-size: {fontSize}px; padding: {padding}px {padding}px; {showMacOS ? `margin-top: -${padding}px` : ''}"
             >{code}</code></pre>
         <textarea
           bind:value={code}
           on:input={setHeight}
           id="codeSnippet"
           name="code-snippet noselect"
+          cols = 80
           style="background: {terminalBackground}; {showMacOS || showWindows ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;` : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS ? 'padding-top: 0' : ''}"
         />
         <div
@@ -395,6 +398,8 @@
     margin: 0;
     width: fit-content;
     font-size: inherit;
+    width: -webkit-fill-available;
+    // width: 80ch;
   }
   pre code {
     padding: 0;
@@ -406,10 +411,10 @@
     margin: 50px 0;
   }
 
-  pre,
-  .code-snippet-container {
-    width: 55em;
-  }
+  // pre,
+  // .code-snippet-container {
+  //   width: 55em;
+  // }
 
   #code {
     background: transparent !important;
