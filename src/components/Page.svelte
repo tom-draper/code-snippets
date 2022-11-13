@@ -335,8 +335,8 @@
     @font-face {
         font-family: 'SF Mono';
         src: url('fonts/SFMonoRegular.otf');
-        font-weight: normal;
-        font-style: normal;
+        // font-weight: normal;
+        // font-style: normal;
     }
 
   :global(body) {
@@ -534,6 +534,16 @@
       :global(div) {
         border-radius: 0;
       }
+    }
+  }
+
+  :global(button) {
+    cursor: pointer;
+  }
+
+  .select-border-radius {
+    input {
+      width: -webkit-fill-available;
     }
   }
 
