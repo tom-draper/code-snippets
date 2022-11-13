@@ -34,12 +34,26 @@
     document.documentElement.setAttribute('data-theme', theme);
   }
 
+  function setOS(os: string) {
+    if (os == 'Windows') {
+      showWindows = true;
+      showMacOS = false;
+   } else if (os == 'MacOS') {
+      showWindows = false;
+      showMacOS = true;
+   } else {
+      showWindows = false;
+      showMacOS = false;
+   }
+  }
+
   let borderRadius = 10;
   let terminalBackground = "#25323a";
   let background = "#bfe4f7";
 
   let showLanguage = true;
   let showMacOS = false;
+  let showWindows = false;
   let fontSize = 16;
   let padding = 40;
   let code = "from functools import lru_cache\n\n@lru_cache\ndef fibonacci(n):\n    if n in {0, 1}:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)";
@@ -62,12 +76,17 @@
         class="code-snippet-container"
         style="border-radius: {borderRadius}px; font-size: {fontSize}px;"
       >
-      <div
+        <div
           style="{showMacOS ? '' : 'display: none;'}; border-radius: {borderRadius}px {borderRadius}px 0 0; background: {terminalBackground}; padding-bottom: {padding}px;"
           class="mac-os">
           <div class="dot red-dot"></div>
           <div class="dot yellow-dot"></div>
           <div class="dot green-dot"></div>
+        </div>
+        <div
+          style="{showWindows ? '' : 'display: none;'}; border-radius: {borderRadius}px {borderRadius}px 0 0; background: {terminalBackground};"
+          class="windows">
+          <img src="windows.png" alt="">
         </div>
         <pre style="font-size: {fontSize}px;"><code
             id="code"
@@ -79,7 +98,7 @@
           on:input={setHeight}
           id="codeSnippet"
           name="code-snippet noselect"
-          style="background: {terminalBackground}; {showMacOS ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;` : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS ? 'padding-top: 0' : ''}"
+          style="background: {terminalBackground}; {showMacOS || showWindows ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;` : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS ? 'padding-top: 0' : ''}"
         />
         <div
             style="right: {padding}px; bottom: {padding}px; font-family: {font};"
@@ -246,10 +265,9 @@
       </div>
 
       <div class="show-os">
-        <label>
-          MacOS:
-          <input type=checkbox bind:checked={showMacOS}>
-        </label>
+        <button class="os-btn none-os-btn {showMacOS || showWindows ? '' : 'active'}" on:click="{() => setOS('None')}">None</button>
+        <button class="os-btn mac-os-btn {showMacOS ? 'active' : ''}" on:click="{() => setOS('MacOS')}">MacOS</button>
+        <button class="os-btn windows-btn {showWindows ? 'active' : ''}" on:click="{() => setOS('Windows')}">Windows</button>
       </div>
 
       <div class="select-font-size">
@@ -455,6 +473,42 @@
   }
   .green-dot {
     background: #5ec851;
+  }
+
+  .windows {
+    width: 100%;
+    display: grid;
+    img {
+      margin: 2px 1px 0 auto;
+    }
+  }
+
+  .show-os {
+    display: flex;
+  }
+
+  .os-btn {
+    padding: 3px 8px;
+    flex: 1;
+    justify-content: center;;
+  }
+
+  .mac-os-btn {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .none-os-btn {
+    border-radius: 6px 0 0 6px;
+  }
+  .windows-btn {
+    border-radius: 0 6px 6px 0;
+  }
+
+  .active {
+    background: #005cc8;
+    color: white;
   }
 
   :global(.selector) {
