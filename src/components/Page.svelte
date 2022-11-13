@@ -104,6 +104,16 @@
             >
           </li>
           <li>
+            <Radio name="group1" bind:group={font} value={"Hack"}
+              >Hack</Radio
+            >
+          </li>
+          <li>
+            <Radio name="group1" bind:group={font} value={"Noto Sans Mono"}
+              >Noto Sans Mono</Radio
+            >
+          </li>
+          <li>
             <Radio name="group1" bind:group={font} value={"Roboto Mono"}
               >Roboto Mono</Radio
             >
@@ -121,11 +131,6 @@
           <li>
             <Radio name="group1" bind:group={font} value={"JetBrains Mono"}
               >JetBrains Mono</Radio
-            >
-          </li>
-          <li>
-            <Radio name="group1" bind:group={font} value={"Noto Sans Mono"}
-              >Noto Sans Mono</Radio
             >
           </li>
           <li>
@@ -151,11 +156,6 @@
           <li>
             <Radio name="group1" bind:group={font} value={"Deja Vu Sans Mono"}
               >Deja Vu Sans Mono</Radio
-            >
-          </li>
-          <li>
-            <Radio name="group1" bind:group={font} value={"Hack"}
-              >Hack</Radio
             >
           </li>
           <li>
