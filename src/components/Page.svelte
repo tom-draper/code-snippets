@@ -264,7 +264,7 @@
         </div>
   
         <div class="select-border-radius">
-          <div>Margin: {padding - 10}</div>
+          <div>Margin: {padding - 10}px</div>
           <input
             type="range"
             name=""
@@ -275,7 +275,7 @@
           />
         </div>
         <div class="select-border-radius">
-          <div>Border radius: {borderRadius}</div>
+          <div>Border radius: {borderRadius}px</div>
           <input
             type="range"
             name=""
@@ -386,12 +386,17 @@
     place-items: center;
     height: fit-content;
     min-height: 100vh;
+    margin-right: max(340px, 20%);
   }
   .controller {
     width: max(340px, 20%);
     display: flex;
     flex-direction: column;
-    font-family: 'SF Pro Display Regular'
+    font-family: 'SF Pro Display Regular';
+    position: fixed;
+    height: 100vh;
+    right: 0;
+    background: white;
   }
   .options {
     padding: 20px 20px;
@@ -410,7 +415,6 @@
       background: #0d6efd;
       color: rgb(250, 250, 250);
       font-family: 'SF Pro Display Medium';
-      // margin: 18px 16px 16px;
     }
   }
   #codeSnippet {
