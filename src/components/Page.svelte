@@ -58,7 +58,7 @@
     let c = document.getElementById("download") as HTMLElement; // or document.getElementById('canvas');
     html2canvas(c).then((canvas: any) => {
       let t = canvas.toDataURL().replace("data:image/png;base64,", "");
-      downloadBase64File("image/png", t, "image");
+      downloadBase64File("image/png", t, "code");
     });
   }
 
@@ -83,6 +83,7 @@
   let showWindows = false;
   let fontSize = 16;
   let padding = 40;
+  let shadow = 0;
   let code =
     "from functools import lru_cache\n\n@lru_cache\ndef fibonacci(n):\n    if n in {0, 1}:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)";
   $: code && renderCode();
@@ -178,7 +179,7 @@
             ? `border-radius: 0 0 ${borderRadius}px ${borderRadius}px;`
             : `border-radius: ${borderRadius}px;`} font-family: {font} !important; padding: {padding}px {padding}px; {showMacOS
             ? 'padding-top: 0'
-            : ''}"
+            : ''} {shadow == 0 ? '' : `box-shadow: rgb(38, 57, 77) 0px ${shadow*(2/3)}px ${shadow}px -${shadow/3}px;`}"
         />
         <div
           style="right: {padding}px; bottom: {padding}px; font-family: {font};"
@@ -190,6 +191,7 @@
     </div>
     <div class="controller">
       <div class="options">
+
         <ColorPicker label="Background color" bind:hex={background} />
         <ColorPicker label="Editor color" bind:hex={terminalBackground} />
   
@@ -285,12 +287,26 @@
             bind:value={borderRadius}
           />
         </div>
+        <div class="select-border-radius">
+          <div>Shadow: {shadow}px</div>
+          <input
+            type="range"
+            name=""
+            id=""
+            min="0"
+            max="100"
+            bind:value={shadow}
+          />
+        </div>
         <div class="show-language">
           <label>
             Show language:
             <input type="checkbox" bind:checked={showLanguage} />
           </label>
         </div>
+        <!-- <div class="presets">
+          <button>Presets</button>
+        </div> -->
       </div>
       <div class="take-screenshot">
         <button on:click="{takeScreenshot}">Take Screenshot</button>
