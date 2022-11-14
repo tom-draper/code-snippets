@@ -264,7 +264,7 @@
         </div>
   
         <div class="select-border-radius">
-          <div>Margin: {padding - 10}</div>
+          <div>Margin: {padding - 10}px</div>
           <input
             type="range"
             name=""
@@ -275,7 +275,7 @@
           />
         </div>
         <div class="select-border-radius">
-          <div>Border radius: {borderRadius}</div>
+          <div>Border radius: {borderRadius}px</div>
           <input
             type="range"
             name=""
