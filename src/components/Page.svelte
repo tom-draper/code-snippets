@@ -393,7 +393,7 @@
   .options {
     padding: 20px 20px;
     flex-grow: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   .take-screenshot {
     background: rgb(235, 240, 245);
