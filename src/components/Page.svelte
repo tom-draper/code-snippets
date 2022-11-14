@@ -88,7 +88,43 @@
   $: code && renderCode();
   $: code == "" && renderCode();
   let language = "python";
-  let font = "Fira Code";
+
+
+  let fonts = [
+    'Fira Code',
+    'SF Mono',
+    'Hack',
+    'Noto Sans Mono',
+    'Roboto Mono',
+    'Space Mono',
+    'Ubuntu Mono',
+    'JetBrains Mono',
+    'IBM Plex Mono',
+    'Share Tech Mono',
+    'Cascadia Code',
+    'Red Hat Mono',
+    'Deja Vu Sans Mono',
+    'Proggy',
+    'Terminus',
+    'Dina',
+  ]
+  let font = fonts[0];
+  let themes = [
+    {name: 'Atom One Dark', id: 'atom-one-dark'},
+    {name: 'Atom One Light', id: 'atom-one-light'},
+    {name: 'GitHub Light', id: 'github'},
+    {name: 'GitHub Dark', id: 'github-dark'},
+    {name: 'Monokai', id: 'monokai'},
+    {name: 'Nord', id: 'nord'},
+    {name: 'XCode', id: 'xcode'},
+    {name: 'Google Code', id: 'googlecode'},
+    {name: 'A11y Dark', id: 'a11y-dark'},
+    {name: 'A11y Light', id: 'a11y-light'},
+    {name: 'Night Owl', id: 'night-owl'},
+    {name: 'Obsidian', id: 'obsidian'},
+    {name: 'Tokyo Night Dark', id: 'tokyo-night-dark'},
+    {name: 'Tokyo Night Light', id: 'tokyo-night-light'},
+  ]
   let theme = "atom-one-dark";
 
   $: font && setHeight();
@@ -160,82 +196,13 @@
         <div class="selector">
           <Button><Chevron>Font: {font}</Chevron></Button>
           <Dropdown>
+            {#each fonts as fontFamily}
             <li>
-              <Radio name="group1" bind:group={font} value={"Fira Code"}
-                >Fira Code</Radio
+              <Radio name="group1" bind:group={font} value={fontFamily}
+                >{fontFamily}</Radio
               >
             </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"SF Mono"}
-                >SF Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Hack"}>Hack</Radio>
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Noto Sans Mono"}
-                >Noto Sans Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Roboto Mono"}
-                >Roboto Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Space Mono"}
-                >Space Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Ubuntu Mono"}
-                >Ubuntu Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"JetBrains Mono"}
-                >JetBrains Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"IBM Plex Mono"}
-                >IBM Plex Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Share Tech Mono"}
-                >Share Tech Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Cascadia Code"}
-                >Cascadia Code</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Red Hat Mono"}
-                >Red Hat Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Deja Vu Sans Mono"}
-                >Deja Vu Sans Mono</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Proggy"}
-                >Proggy</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Terminus"}
-                >Terminus</Radio
-              >
-            </li>
-            <li>
-              <Radio name="group1" bind:group={font} value={"Dina"}>Dina</Radio>
-            </li>
+            {/each}
           </Dropdown>
         </div>
   
@@ -245,155 +212,22 @@
             ></Button
           >
           <Dropdown>
+            {#each themes as _theme}
             <li>
               <Radio
                 name="group2"
                 bind:group={theme}
                 on:click={() => {
-                  setTheme("atom-one-dark");
+                  setTheme(_theme.id);
                 }}
-                value="atom-one-dark">Atom One Dark</Radio
+                value="{_theme.id}">{_theme.name}</Radio
               >
             </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("atom-one-light");
-                }}
-                value="atom-one-light">Atom One Light</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("github");
-                }}
-                value="github">GitHub Light</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("github-dark");
-                }}
-                value="github-dark">GitHub Dark</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("monokai");
-                }}
-                value="monokai">Monokai</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("nord");
-                }}
-                value="nord">Nord</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("xcode");
-                }}
-                value="xcode">XCode</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("googlecode");
-                }}
-                value="googlecode">Google Code</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("a11y-dark");
-                }}
-                value="a11y-dark">A11y Dark</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("a11y-light");
-                }}
-                value="a11y-light">A11y Light</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("night-owl");
-                }}
-                value="night-owl">Night Owl</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("obsidian");
-                }}
-                value="obsidian">Obsidian</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("tokyo-night-dark");
-                }}
-                value="tokyo-night-dark">Tokyo Night Dark</Radio
-              >
-            </li>
-            <li>
-              <Radio
-                name="group2"
-                bind:group={theme}
-                on:click={() => {
-                  setTheme("tokyo-night-light");
-                }}
-                value="tokyo-night-light">Tokyo Night Light</Radio
-              >
-            </li>
+            {/each}
           </Dropdown>
         </div>
   
-        <div class="show-language">
-          <label>
-            Show language:
-            <input type="checkbox" bind:checked={showLanguage} />
-          </label>
-        </div>
+
   
         <div class="show-os">
           <button
@@ -447,6 +281,12 @@
             max="50"
             bind:value={borderRadius}
           />
+        </div>
+        <div class="show-language">
+          <label>
+            Show language:
+            <input type="checkbox" bind:checked={showLanguage} />
+          </label>
         </div>
       </div>
       <div class="take-screenshot">
@@ -560,12 +400,14 @@
     button {
       width: -webkit-fill-available;
       justify-content: center;
-      padding: 10px 0;
+      padding: 12px 0;
+      border: none;
+      border-radius: 0;
       font-size: 1.1em;
       background: #0d6efd;
       color: rgb(250, 250, 250);
       font-family: 'SF Pro Display Medium';
-      margin: 18px 16px 16px;
+      // margin: 18px 16px 16px;
     }
   }
   #codeSnippet {
@@ -668,7 +510,9 @@
       width: 25px;
       height: 25px;
       font-weight: 500;
-      font-family: 'SF Pro Display Semibold'
+      font-family: 'SF Pro Display Semibold';
+      border: none;
+      background: #eaeaea;
     }
   }
   .font-size-display {
@@ -707,9 +551,16 @@
 
   .show-os {
     display: flex;
+    padding: 15px 0;
     button {
       font-family: 'SF Pro Display Regular';
       font-size: 16px;
+      border: none;
+      background: #eaeaea;
+    }
+    .active {
+  background: #0d6efd;
+  color: white;
     }
   }
 
@@ -732,17 +583,21 @@
     border-radius: 0 6px 6px 0;
   }
 
-  .active {
-    background: #0d6efd;
-    color: white;
-  }
+  // .active {
+  //   background: #0d6efd;
+  //   color: white;
+  // }
 
   :global(.selector) {
-    margin: 10px 0;
+    padding: 5px 0;
     :global(button) {
       width: 100%;
       font-family: 'SF Pro Display Regular';
       font-size: 16px;
+      border: none;
+      background: #eaeaea;
+      padding: 8px 12px;
+      margin-bottom: 5px;
       :global(svg) {
         margin-left: auto;
       }
@@ -757,8 +612,8 @@
   }
 
   :global(.color-picker) {
-    margin: 10px 0;
     :global(label) {
+      margin-bottom: 15px;
       :global(div) {
         border-radius: 0;
       }
@@ -770,19 +625,20 @@
   }
 
   .select-border-radius {
+    padding: 10px 0;
     input {
       width: -webkit-fill-available;
     }
   }
 
   .select-font-size {
-    margin: 15px 0;
+    padding: 10px 0;
     .font-size-display {
       align-self: center;
     }
   }
   .show-language,
   .show-macos {
-    margin: 10px 0;
+    padding: 15px 0;
   }
 </style>
