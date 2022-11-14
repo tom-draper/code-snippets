@@ -245,15 +245,18 @@
         </div>
   
         <div class="select-font-size">
+          <div class="select-font-size-label">
+            Font size:
+          </div>
           <button
-            class="increase-font-size-btn"
+            class="increase-font-size-btn noselect"
             on:click={() => {
               fontSize = Math.max(fontSize - 1, 9);
             }}>–</button
           >
-          <div class="font-size-display">{fontSize}</div>
+          <div class="font-size-display">{fontSize}px</div>
           <button
-            class="decrease-font-size-btn"
+            class="decrease-font-size-btn noselect"
             on:click={() => {
               fontSize = Math.min(fontSize + 1, 25);
             }}>+</button
@@ -511,13 +514,17 @@
       height: 25px;
       font-weight: 500;
       font-family: 'SF Pro Display Semibold';
-      border: none;
-      background: #eaeaea;
+      // border: none;
+      background: white;
     }
+  }
+  .select-font-size-label {
+    margin: auto 10px auto 0;
   }
   .font-size-display {
     text-align: center;
     margin: 0 5px;
+    min-width: 36px;
   }
 
   .mac-os {
@@ -551,12 +558,13 @@
 
   .show-os {
     display: flex;
-    padding: 15px 0;
+    padding: 5px 0 15px;
     button {
       font-family: 'SF Pro Display Regular';
       font-size: 16px;
-      border: none;
-      background: #eaeaea;
+      padding: 5px 0;
+      // border: none;
+      background: white;
     }
     .active {
   background: #0d6efd;
@@ -594,8 +602,8 @@
       width: 100%;
       font-family: 'SF Pro Display Regular';
       font-size: 16px;
-      border: none;
-      background: #eaeaea;
+      // border: none;
+      background: white;
       padding: 8px 12px;
       margin-bottom: 5px;
       :global(svg) {
@@ -625,20 +633,19 @@
   }
 
   .select-border-radius {
-    padding: 10px 0;
+    padding: 8px 0;
     input {
       width: -webkit-fill-available;
     }
   }
 
   .select-font-size {
-    padding: 10px 0;
+    padding: 5px 0 8px;
     .font-size-display {
       align-self: center;
     }
   }
-  .show-language,
-  .show-macos {
-    padding: 15px 0;
+  .show-language {
+    padding: 10px 0;
   }
 </style>
